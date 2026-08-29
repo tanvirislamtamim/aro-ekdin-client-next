@@ -1,0 +1,161 @@
+@import "tailwindcss";
+@plugin "daisyui";
+
+:root {
+  --background: #0a0a0a;
+  --foreground: #ededed;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: #0a0a0a;
+  color: #ededed;
+  font-family: Arial, Helvetica, sans-serif;
+  overflow-x: hidden;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* GPU Hardware Acceleration & Performance Utilities */
+.gpu-accelerated,
+.hardware-accelerated {
+  -webkit-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -webkit-perspective: 1000px;
+  perspective: 1000px;
+  will-change: transform, opacity;
+}
+
+.backface-hidden {
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+}
+
+.cv-auto {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 350px;
+}
+
+.will-transform {
+  will-change: transform;
+}
+
+/* Optimized Hardware-Accelerated Animations with backface-visibility & 3D transforms */
+@keyframes slowZoom {
+  from { 
+    transform: scale3d(1, 1, 1); 
+  }
+  to { 
+    transform: scale3d(1.15, 1.15, 1); 
+  }
+}
+
+.animate-zoom {
+  animation: slowZoom 6s linear infinite alternate;
+  will-change: transform;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+}
+
+@keyframes spinSlow {
+  from {
+    transform: rotate3d(0, 0, 1, 0deg);
+  }
+  to {
+    transform: rotate3d(0, 0, 1, 360deg);
+  }
+}
+
+.animate-spin-slow {
+  animation: spinSlow 12s linear infinite;
+  will-change: transform;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+}
+
+@keyframes volleyballBounce {
+  0%, 100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(0, -30px, 0);
+  }
+}
+
+.animate-volleyball-bounce {
+  animation: volleyballBounce 2s ease-in-out infinite;
+  will-change: transform;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+@keyframes shadowPulse {
+  0%, 100% {
+    transform: translate3d(-50%, 0, 0) scaleX(1);
+    opacity: 0.5;
+  }
+  50% {
+    transform: translate3d(-50%, 0, 0) scaleX(0.6);
+    opacity: 0.2;
+  }
+}
+
+.animate-shadow-pulse {
+  animation: shadowPulse 2s ease-in-out infinite;
+  will-change: transform, opacity;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+@keyframes pulseSlow {
+  0%, 100% {
+    opacity: 0.3;
+    transform: scale3d(1, 1, 1);
+  }
+  50% {
+    opacity: 0.6;
+    transform: scale3d(1.1, 1.1, 1);
+  }
+}
+
+.animate-pulse-slow {
+  animation: pulseSlow 4s ease-in-out infinite;
+  will-change: transform, opacity;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+}
+
+.animate-pulse-slower {
+  animation: pulseSlow 6s ease-in-out infinite 1s;
+  will-change: transform, opacity;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+}
+
+@keyframes floatSlow {
+  0%, 100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(0, -15px, 0);
+  }
+}
+
+.animate-float {
+  animation: floatSlow 5s ease-in-out infinite;
+  will-change: transform;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
