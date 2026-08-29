@@ -2,7 +2,8 @@
 
 import { useState, useEffect, useRef } from 'react';
 import dynamic from 'next/dynamic';
-import TopPlayers from '../../components/TopPlayers/TopPlayers';
+
+import TeamFamilyTree from '@/components/TeamFamilyTree/TeamFamilyTree';
 
 const PlayersMarquee = dynamic(() => import('../../components/PlayersMarquee/PlayersMarquee'), {
   ssr: true,
@@ -198,7 +199,9 @@ const Home = () => {
           <AutoPlayVideo videoSrc="https://res.cloudinary.com/do8awe7fc/video/upload/q_auto/f_auto/v1777145434/MainVideo_rxfdje.mp4" />
         </div>
 
-        <TopPlayers />
+        {/* Team Family Tree Section */}
+        <TeamFamilyTree />
+        
       </div>
     </>
   );

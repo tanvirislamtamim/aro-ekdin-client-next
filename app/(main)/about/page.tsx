@@ -1,8 +1,9 @@
 "use client";
 
 import React, { useMemo, useCallback } from "react";
-import { motion, useTransform, useScroll, useSpring, useInView, MotionValue } from "framer-motion";
+import { motion, useTransform, useScroll, useSpring, useInView, useMotionValue, MotionValue } from "framer-motion";
 import Lenis from "@studio-freight/lenis";
+import TeamFamilyTree from "../../../components/TeamFamilyTree/TeamFamilyTree";
 
 // Animated counter
 const AnimatedCounter = ({ value, suffix = "" }: { value: number; suffix?: string }) => {
@@ -41,17 +42,16 @@ const AnimatedCounter = ({ value, suffix = "" }: { value: number; suffix?: strin
   );
 };
 
-// Floating particles
+// Floating particles (optimized)
 const FloatingParticles = ({ isVisible = true }: { isVisible?: boolean }) => {
   const particles = useMemo(() =>
-    Array.from({ length: 25 }, (_, i) => ({
+    Array.from({ length: 15 }, (_, i) => ({
       id: i,
       size: Math.random() * 4 + 2,
       left: `${Math.random() * 100}%`,
       top: `${Math.random() * 100}%`,
-      duration: Math.random() * 15 + 8,
-      delay: Math.random() * 3,
-      rotate: Math.random() * 360,
+      duration: Math.random() * 12 + 8,
+      delay: Math.random() * 2,
     })), []
   );
 
@@ -62,19 +62,18 @@ const FloatingParticles = ({ isVisible = true }: { isVisible?: boolean }) => {
       {particles.map((p) => (
         <motion.div
           key={p.id}
-          className="absolute rounded-full bg-linear-to-r from-blue-400/20 to-red-400/20 will-change-transform"
+          className="absolute rounded-full bg-linear-to-r from-blue-400/20 to-red-400/20"
           style={{
             width: p.size,
             height: p.size,
             left: p.left,
             top: p.top,
             transform: "translateZ(0)",
-            backfaceVisibility: "hidden",
-            willChange: "transform, opacity",
+            willChange: "transform",
           }}
           animate={{
-            y: [0, -40, 0, 40, 0],
-            x: [0, 25, 0, -25, 0],
+            y: [0, -30, 0, 30, 0],
+            x: [0, 15, 0, -15, 0],
             opacity: [0.1, 0.4, 0.1],
           }}
           transition={{
@@ -95,42 +94,28 @@ const ScrollProgress = ({ scrollYProgress }: { scrollYProgress: MotionValue<numb
   return (
     <motion.div
       className="fixed top-0 left-0 right-0 h-1 bg-linear-to-r from-blue-500 via-red-500 to-blue-500 z-50 origin-left"
-      style={{ scaleX, willChange: "transform", transform: "translateZ(0)", backfaceVisibility: "hidden" }}
+      style={{ scaleX, willChange: "transform", transform: "translateZ(0)" }}
     />
   );
 };
 
-// 3D Floating Shapes
-const FloatingShapes = ({ mousePosition, isVisible = true }: { mousePosition: { x: number; y: number }; isVisible?: boolean }) => {
+// 3D Floating Shapes (GPU optimized)
+const FloatingShapes = ({ isVisible = true }: { isVisible?: boolean }) => {
   if (!isVisible) return null;
 
   return (
     <>
-      <motion.div
-        className="absolute top-20 left-[10%] w-32 h-32 bg-blue-500/20 rounded-full blur-2xl will-change-transform"
-        style={{ willChange: "transform", transform: "translateZ(0)", backfaceVisibility: "hidden" }}
-        animate={{
-          x: mousePosition.x * 0.3,
-          y: mousePosition.y * 0.3,
-        }}
-        transition={{ type: "spring", stiffness: 60, damping: 20 }}
+      <div
+        className="absolute top-20 left-[10%] w-32 h-32 bg-blue-500/20 rounded-full blur-2xl pointer-events-none transform-gpu animate-float"
+        style={{ transform: "translateZ(0)" }}
       />
-      <motion.div
-        className="absolute bottom-20 right-[10%] w-48 h-48 bg-red-500/20 rounded-full blur-3xl will-change-transform"
-        style={{ willChange: "transform", transform: "translateZ(0)", backfaceVisibility: "hidden" }}
-        animate={{
-          x: mousePosition.x * -0.2,
-          y: mousePosition.y * -0.2,
-        }}
-        transition={{ type: "spring", stiffness: 60, damping: 20 }}
+      <div
+        className="absolute bottom-20 right-[10%] w-48 h-48 bg-red-500/20 rounded-full blur-3xl pointer-events-none transform-gpu animate-pulse-slow"
+        style={{ transform: "translateZ(0)" }}
       />
-      <motion.div
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-purple-500/10 rounded-full blur-[100px] will-change-transform"
-        style={{ willChange: "transform", transform: "translateZ(0)", backfaceVisibility: "hidden" }}
-        animate={{
-          rotate: [0, 360],
-        }}
-        transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
+      <div
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl pointer-events-none transform-gpu animate-spin-slow"
+        style={{ transform: "translateZ(0)" }}
       />
     </>
   );
@@ -139,11 +124,10 @@ const FloatingShapes = ({ mousePosition, isVisible = true }: { mousePosition: { 
 const AboutUs = () => {
   React.useEffect(() => {
     const lenis = new Lenis({
-      duration: 1.0,
+      duration: 1.2,
       easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       smoothWheel: true,
-      touchMultiplier: 1.5,
-      wheelMultiplier: 0.8,
+      wheelMultiplier: 1,
       infinite: false,
     });
 
@@ -161,16 +145,18 @@ const AboutUs = () => {
   }, []);
 
   const { scrollYProgress } = useScroll();
-  const smoothProgress = useSpring(scrollYProgress, { stiffness: 80, damping: 20, mass: 0.5 });
-  const bgRotate = useTransform(smoothProgress, [0, 1], [0, 360]);
 
   // Hero parallax
   const heroY = useTransform(scrollYProgress, [0, 0.5], [0, -100]);
   const heroOpacity = useTransform(scrollYProgress, [0, 0.25], [1, 0]);
   const heroScale = useTransform(scrollYProgress, [0, 0.25], [1, 0.96]);
 
-  // Mouse tilt for hero
-  const [mousePosition, setMousePosition] = React.useState({ x: 0, y: 0 });
+  // High performance mouse tilt using MotionValues (no React re-renders)
+  const heroMouseX = useMotionValue(0);
+  const heroMouseY = useMotionValue(0);
+  const smoothHeroRotateX = useSpring(heroMouseY, { stiffness: 100, damping: 25 });
+  const smoothHeroRotateY = useSpring(heroMouseX, { stiffness: 100, damping: 25 });
+
   const heroRef = React.useRef<HTMLDivElement>(null);
   const isHeroInView = useInView(heroRef, { margin: "100px" });
 
@@ -179,9 +165,14 @@ const AboutUs = () => {
     const rect = heroRef.current.getBoundingClientRect();
     const x = (e.clientX - rect.left) / rect.width - 0.5;
     const y = (e.clientY - rect.top) / rect.height - 0.5;
-    setMousePosition({ x: x * 20, y: y * 15 });
-  }, []);
-  const handleMouseLeave = useCallback(() => setMousePosition({ x: 0, y: 0 }), []);
+    heroMouseX.set(x * 16);
+    heroMouseY.set(y * -12);
+  }, [heroMouseX, heroMouseY]);
+
+  const handleMouseLeave = useCallback(() => {
+    heroMouseX.set(0);
+    heroMouseY.set(0);
+  }, [heroMouseX, heroMouseY]);
 
   const card3DHover = {
     rest: { scale: 1, rotateY: 0, rotateX: 0, boxShadow: "0px 0px 0px rgba(0,0,0,0)" },
@@ -202,29 +193,36 @@ const AboutUs = () => {
     },
   };
 
-  const [imageMousePos, setImageMousePos] = React.useState({ x: 0, y: 0 });
+  // Image 3D tilt using MotionValues (no React re-renders)
+  const imageMouseX = useMotionValue(0);
+  const imageMouseY = useMotionValue(0);
+  const smoothImageRotateX = useSpring(imageMouseY, { stiffness: 120, damping: 20 });
+  const smoothImageRotateY = useSpring(imageMouseX, { stiffness: 120, damping: 20 });
   const imageRef = React.useRef<HTMLDivElement>(null);
+
   const handleImageMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
     if (!imageRef.current) return;
     const rect = imageRef.current.getBoundingClientRect();
     const x = (e.clientX - rect.left) / rect.width - 0.5;
     const y = (e.clientY - rect.top) / rect.height - 0.5;
-    setImageMousePos({ x: x * 15, y: y * 15 });
-  }, []);
-  const handleImageMouseLeave = useCallback(() => setImageMousePos({ x: 0, y: 0 }), []);
+    imageMouseX.set(x * 12);
+    imageMouseY.set(y * -12);
+  }, [imageMouseX, imageMouseY]);
+
+  const handleImageMouseLeave = useCallback(() => {
+    imageMouseX.set(0);
+    imageMouseY.set(0);
+  }, [imageMouseX, imageMouseY]);
 
   return (
-    <div className="relative bg-linear-to-b from-black via-gray-950 to-black text-white overflow-x-hidden">
+    <div className="relative bg-linear-to-b from-black via-gray-950 to-black text-white overflow-x-clip">
       <ScrollProgress scrollYProgress={scrollYProgress} />
 
-      <motion.div
-        className="fixed inset-0 opacity-20 pointer-events-none"
+      <div
+        className="fixed inset-0 opacity-20 pointer-events-none animate-pulse-slow"
         style={{
           background: "radial-gradient(circle at center, rgba(59,130,246,0.3) 0%, rgba(239,68,68,0.3) 100%)",
-          rotate: bgRotate,
-          willChange: "transform",
           transform: "translateZ(0)",
-          backfaceVisibility: "hidden",
         }}
       />
 
@@ -241,11 +239,10 @@ const AboutUs = () => {
           y: heroY,
           opacity: heroOpacity,
           scale: heroScale,
-          rotateX: mousePosition.y,
-          rotateY: mousePosition.x,
-          willChange: "transform, opacity",
+          rotateX: smoothHeroRotateX,
+          rotateY: smoothHeroRotateY,
           transform: "translateZ(0)",
-          backfaceVisibility: "hidden",
+          willChange: "transform, opacity",
         }}
         initial={{ opacity: 0, scale: 0.95, y: 50 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -253,9 +250,9 @@ const AboutUs = () => {
         className="relative h-screen min-h-175 flex items-center justify-center overflow-hidden"
       >
         <div className="absolute inset-0 bg-linear-to-br from-blue-900/40 via-black/80 to-red-900/40 z-0" />
-        <FloatingShapes mousePosition={mousePosition} isVisible={isHeroInView} />
+        <FloatingShapes isVisible={isHeroInView} />
 
-        <div className="relative z-10 text-center px-4 max-w-6xl mx-auto">
+        <div className="relative z-10 text-center px-4 max-w-7xl mx-auto w-full">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -269,7 +266,7 @@ const AboutUs = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ staggerChildren: 0.05, delayChildren: 0.2 }}
-            className="mb-6 flex flex-wrap justify-center items-center"
+            className="mb-6 flex flex-wrap lg:flex-nowrap justify-center items-center gap-2 sm:gap-4 md:gap-6 whitespace-normal lg:whitespace-nowrap"
           >
             {["Aro", "Ekdin", "Team"].map((word, idx) => (
               <motion.span
@@ -282,7 +279,7 @@ const AboutUs = () => {
                   damping: 12,
                   delay: idx * 0.08,
                 }}
-                className="inline-flex items-center text-6xl md:text-8xl lg:text-9xl font-black uppercase tracking-tighter mx-2"
+                className="inline-flex items-center shrink-0 text-5xl sm:text-6xl md:text-7xl lg:text-7xl xl:text-8xl font-black uppercase tracking-tight"
               >
                 {word === "Aro" ? (
                   <>
@@ -292,7 +289,7 @@ const AboutUs = () => {
                     <img
                       src="https://res.cloudinary.com/do8awe7fc/image/upload/q_auto/f_auto/v1777145975/Logo_qzb1xk.jpg"
                       alt="o"
-                      className="w-14 h-14 md:w-20 md:h-20 lg:w-24 lg:h-24 object-cover rounded-full mx-1 border-2 border-white"
+                      className="w-11 h-11 sm:w-14 sm:h-14 md:w-16 md:h-16 lg:w-18 lg:h-18 xl:w-20 xl:h-20 object-cover rounded-full mx-1 sm:mx-1.5 border-2 border-white shrink-0"
                     />
                   </>
                 ) : (
@@ -378,11 +375,11 @@ const AboutUs = () => {
             />
             <motion.div
               className="relative rounded-2xl overflow-hidden shadow-2xl"
-              animate={{
-                rotateX: imageMousePos.y,
-                rotateY: imageMousePos.x,
+              style={{
+                rotateX: smoothImageRotateX,
+                rotateY: smoothImageRotateY,
+                transform: "translateZ(0)",
               }}
-              transition={{ type: "spring", stiffness: 200, damping: 20 }}
             >
               <img src="https://res.cloudinary.com/do8awe7fc/image/upload/q_auto/f_auto/v1777145679/IMG_2008_uxdtnc.jpg" alt="Team playing" className="w-full h-full object-cover" />
               <div className="absolute inset-0 bg-linear-to-t from-black/70 via-transparent to-transparent" />
@@ -434,6 +431,8 @@ const AboutUs = () => {
           </div>
         </div>
       </div>
+
+    
 
       {/* Map Section */}
       <motion.div
