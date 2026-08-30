@@ -160,12 +160,12 @@ export const Player3DMarker: React.FC<Player3DMarkerProps> = ({
             onSelect(player);
           }}
           className={`flex flex-col items-center cursor-pointer transition-all duration-300 ${
-            hovered || isSelected ? "scale-110 sm:scale-115 -translate-y-1.5 sm:-translate-y-2" : "scale-100"
+            hovered || isSelected ? "scale-105 sm:scale-115 -translate-y-1 sm:-translate-y-2" : "scale-100"
           }`}
         >
-          {/* Prominent Top Position Banner */}
+          {/* Prominent Top Position Banner - Hidden on mobile */}
           <div
-            className={`px-2 sm:px-3 py-0.5 sm:py-1 rounded-full text-[9px] sm:text-[10px] font-black tracking-wider uppercase shadow-xl mb-1 flex items-center gap-1 sm:gap-1.5 border-2 ${currentTheme.badge}`}
+            className={`hidden sm:flex px-2 sm:px-3 py-0.5 sm:py-1 rounded-full text-[9px] sm:text-[10px] font-black tracking-wider uppercase shadow-xl mb-1 items-center gap-1 sm:gap-1.5 border-2 ${currentTheme.badge}`}
           >
             <span>{currentTheme.roleLabel}</span>
             {isCaptain && <span className="px-1 bg-black text-amber-300 rounded font-black text-[8px] sm:text-[9px]">C</span>}
@@ -176,7 +176,7 @@ export const Player3DMarker: React.FC<Player3DMarkerProps> = ({
           <div className="relative group">
             {/* Glowing outer aura */}
             <div
-              className={`absolute -inset-1.5 sm:-inset-2 rounded-full blur-md transition-opacity duration-300 ${
+              className={`absolute -inset-1 sm:-inset-2 rounded-full blur-xs sm:blur-md transition-opacity duration-300 ${
                 hovered || isSelected ? "opacity-100" : "opacity-60"
               }`}
               style={{ backgroundColor: glowColor }}
@@ -184,7 +184,7 @@ export const Player3DMarker: React.FC<Player3DMarkerProps> = ({
 
             {/* Photo Avatar Ring */}
             <div
-              className="relative w-12 h-12 sm:w-16 sm:h-16 rounded-full p-0.5 bg-slate-950 border-2 shadow-2xl"
+              className="relative w-9 h-9 sm:w-16 sm:h-16 rounded-full p-0.5 bg-slate-950 border sm:border-2 shadow-2xl"
               style={{ borderColor: glowColor }}
             >
               <img
@@ -196,23 +196,25 @@ export const Player3DMarker: React.FC<Player3DMarkerProps> = ({
 
               {/* Jersey Number Floating Badge */}
               <div
-                className="absolute -top-1 -right-1 sm:-top-1.5 sm:-right-1.5 w-5 h-5 sm:w-7 sm:h-7 rounded-full bg-slate-950 font-black text-[10px] sm:text-xs flex items-center justify-center border-2 shadow-lg tracking-tighter text-white"
+                className="absolute -top-1 -right-1 sm:-top-1.5 sm:-right-1.5 w-4 h-4 sm:w-7 sm:h-7 rounded-full bg-slate-950 font-black text-[8px] sm:text-xs flex items-center justify-center border sm:border-2 shadow-lg tracking-tighter text-white"
                 style={{ borderColor: glowColor, color: currentTheme.text }}
               >
-                #{player.jersey}
+                {player.jersey}
               </div>
             </div>
           </div>
 
           {/* Player Name and Role Floating Tag */}
-          <div className="mt-1 sm:mt-1.5 flex flex-col items-center">
-            <div className="px-2 sm:px-3 py-0.5 rounded-full bg-slate-950/95 border border-white/20 shadow-2xl flex items-center gap-1">
-              <span className="text-white text-[11px] sm:text-xs font-black tracking-tight whitespace-nowrap">
+          <div className="mt-0.5 sm:mt-1.5 flex flex-col items-center">
+            <div className="px-1.5 sm:px-3 py-0.2 sm:py-0.5 rounded-full bg-slate-950/95 border border-white/20 shadow-2xl flex items-center gap-1">
+              <span className="text-white text-[8.5px] sm:text-xs font-bold sm:font-black tracking-tight whitespace-nowrap">
                 {player.name}
               </span>
+              {isCaptain && <span className="sm:hidden px-1 bg-amber-400 text-black rounded font-black text-[7px] leading-tight">C</span>}
+              {isLibero && <span className="sm:hidden px-1 bg-emerald-400 text-black rounded font-black text-[7px] leading-tight">L</span>}
             </div>
             <span
-              className="text-[9px] sm:text-[10px] font-bold uppercase tracking-wider px-2 sm:px-2.5 py-0.5 rounded-full mt-0.5 backdrop-blur-md whitespace-nowrap bg-slate-900 border"
+              className="text-[7px] sm:text-[10px] font-bold uppercase tracking-wider px-1.5 sm:px-2.5 py-0.2 sm:py-0.5 rounded-full mt-0.5 backdrop-blur-md whitespace-nowrap bg-slate-900 border"
               style={{
                 color: currentTheme.text,
                 borderColor: `${glowColor}60`,

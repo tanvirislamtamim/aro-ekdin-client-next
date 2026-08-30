@@ -152,7 +152,7 @@ const UpdatePlayerContent = () => {
               <img src={player.img} alt={player.name} className="w-20 h-20 object-cover rounded-2xl" />
               <div>
                 <h4 className="text-xl font-bold">{player.name}</h4>
-                <p className="text-cyan-400 font-bold">#{player.jersey}</p>
+                <p className="text-cyan-400 font-bold">Jersey {player.jersey}</p>
               </div>
             </div>
             <div className="flex gap-2">

@@ -148,7 +148,7 @@ export const VolleyballCourtSection: React.FC<VolleyballCourtSectionProps> = ({
                     Server (P1)
                   </span>
                   <span className="block text-[11px] sm:text-xs font-black text-white truncate max-w-[110px] sm:max-w-[140px] leading-tight">
-                    #{currentServer.jersey} {currentServer.name}
+                    {currentServer.jersey} • {currentServer.name}
                   </span>
                 </div>
               </div>
@@ -317,7 +317,7 @@ export const VolleyballCourtSection: React.FC<VolleyballCourtSectionProps> = ({
                   Rotation
                 </span>
                 <span className="block text-xs sm:text-sm font-black text-white tracking-wide leading-none">
-                  P#{rotationCount}/6
+                  P{rotationCount}/6
                 </span>
               </div>
 
@@ -341,7 +341,7 @@ export const VolleyballCourtSection: React.FC<VolleyballCourtSectionProps> = ({
           </div>
 
           {/* 3D CANVAS */}
-          <div className="w-full h-[450px] sm:h-[550px] md:h-[680px]">
+          <div className="w-full h-112.5 sm:h-137.5 md:h-170">
             <DynamicCanvas
               shadows
               camera={{ position: [9, 9, 13], fov: 42 }}
@@ -391,7 +391,7 @@ export const VolleyballCourtSection: React.FC<VolleyballCourtSectionProps> = ({
                     <div className="min-w-0 flex-1">
                       <div className="flex items-center gap-1">
                         <span className="text-cyan-400 font-black text-[11px] sm:text-xs">
-                          #{player.jersey}
+                          {player.jersey}
                         </span>
                         <span className="text-[9px] sm:text-[10px] px-1 py-0.2 rounded bg-cyan-950/80 text-cyan-300 font-mono font-bold">
                           P{player.currentPosition}
@@ -504,7 +504,7 @@ export const VolleyballCourtSection: React.FC<VolleyballCourtSectionProps> = ({
                       className="w-full h-full object-cover"
                     />
                     <div className="absolute -bottom-1 -right-1 w-8 h-8 rounded-full bg-cyan-500 text-black font-black text-xs flex items-center justify-center border-2 border-black">
-                      #{selectedPlayer.jersey}
+                      {selectedPlayer.jersey}
                     </div>
                   </div>
 

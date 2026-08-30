@@ -241,7 +241,7 @@ const TopPlayers: React.FC = () => {
 
                     <div className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-black/60 border border-white/15 backdrop-blur-md">
                       <span className="text-[10px] text-slate-400 font-mono font-semibold">JERSEY</span>
-                      <span className="text-sm font-black text-white">#{player.jersey}</span>
+                      <span className="text-sm font-black text-white">{player.jersey}</span>
                     </div>
                   </div>
 

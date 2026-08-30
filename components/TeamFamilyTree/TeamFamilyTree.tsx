@@ -317,7 +317,7 @@ export const TeamFamilyTree: React.FC = () => {
                         {rootPlayer?.name || "Mizba Al Naim"}
                       </h3>
                       <span className="px-1.5 sm:px-2 py-0.2 sm:py-0.5 rounded-full bg-amber-500/20 border border-amber-500/40 text-amber-300 text-[10px] sm:text-xs font-mono font-black shrink-0">
-                        #{rootPlayer?.jersey || "3"}
+                        {rootPlayer?.jersey || "3"}
                       </span>
                     </div>
 
@@ -483,7 +483,7 @@ export const TeamFamilyTree: React.FC = () => {
                                       {player?.name}
                                     </h5>
                                     <span className="text-[8px] sm:text-[9px] md:text-[10px] font-mono font-extrabold px-1 py-0.2 rounded bg-black/70 text-slate-300 border border-white/10 shrink-0">
-                                      #{player?.jersey || "?"}
+                                      {player?.jersey || "?"}
                                     </span>
                                   </div>
 
@@ -535,7 +535,7 @@ export const TeamFamilyTree: React.FC = () => {
                 {/* Jersey Badge Header */}
                 <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-cyan-500/20 border border-cyan-500/40 text-cyan-300 text-xs font-mono font-bold mb-4">
                   <Activity className="w-3.5 h-3.5 text-cyan-400" />
-                  <span>SQUAD NODE #{selectedPlayer.jersey || "?"}</span>
+                  <span>SQUAD NODE {selectedPlayer.jersey || "?"}</span>
                 </div>
 
                 {/* Avatar with Glow Frame */}

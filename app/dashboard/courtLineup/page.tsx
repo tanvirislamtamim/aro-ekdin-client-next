@@ -356,7 +356,7 @@ const ManageCourtLineupContent = () => {
                           </div>
 
                           <span className="text-[10px] sm:text-xs font-black text-white truncate max-w-full leading-tight">
-                            #{player?.jersey || "0"} {player?.name || "Unassigned"}
+                            {player?.jersey || "0"} {player?.name || "Unassigned"}
                           </span>
                           <span className="text-[9px] sm:text-[10px] text-cyan-300 font-medium truncate max-w-full">
                             {COURT_POSITIONS[pos]?.shortLabel}: {player?.role || "Front Row"}
@@ -444,7 +444,7 @@ const ManageCourtLineupContent = () => {
                           </div>
 
                           <span className="text-[10px] sm:text-xs font-black text-white truncate max-w-full leading-tight">
-                            #{player?.jersey || "0"} {player?.name || "Unassigned"}
+                            {player?.jersey || "0"} {player?.name || "Unassigned"}
                           </span>
                           <span className="text-[9px] sm:text-[10px] text-cyan-300 font-medium truncate max-w-full">
                             {COURT_POSITIONS[pos]?.shortLabel}: {player?.role || "Back Row"}
@@ -462,7 +462,7 @@ const ManageCourtLineupContent = () => {
                 {/* Service Zone Footprint behind P1 */}
                 <div className="mt-3 sm:mt-4 pt-2 border-t-2 border-dashed border-emerald-400/60 flex flex-wrap items-center justify-between text-[9px] sm:text-[10px] font-mono text-emerald-300 font-bold px-2 gap-1">
                   <span>SERVICE ZONE (9m WIDTH BEHIND BASELINE)</span>
-                  <span>SERVER: #{currentServer?.jersey} {currentServer?.name} (P1)</span>
+                  <span>SERVER: {currentServer?.jersey} {currentServer?.name} (P1)</span>
                 </div>
               </div>
             </div>
@@ -511,7 +511,7 @@ const ManageCourtLineupContent = () => {
                             />
                             <div>
                               <p className="text-xs font-bold text-white">
-                                #{p.jersey || "0"} {p.name}
+                                {p.jersey || "0"} {p.name}
                               </p>
                               <p className="text-[10px] text-slate-400">{p.position || "Player"}</p>
                             </div>
@@ -560,7 +560,7 @@ const ManageCourtLineupContent = () => {
                 >
                   {courtPlayers.map((p) => (
                     <option key={p.id} value={p.id} className="bg-slate-900 text-white">
-                      #{p.jersey} {p.name} ({COURT_POSITIONS[p.currentPosition]?.shortLabel})
+                      {p.jersey} {p.name} ({COURT_POSITIONS[p.currentPosition]?.shortLabel})
                     </option>
                   ))}
                 </select>
@@ -579,7 +579,7 @@ const ManageCourtLineupContent = () => {
                 >
                   {courtPlayers.map((p) => (
                     <option key={p.id} value={p.id} className="bg-slate-900 text-white">
-                      #{p.jersey} {p.name} ({COURT_POSITIONS[p.currentPosition]?.shortLabel})
+                      {p.jersey} {p.name} ({COURT_POSITIONS[p.currentPosition]?.shortLabel})
                     </option>
                   ))}
                 </select>
@@ -667,7 +667,7 @@ const ManageCourtLineupContent = () => {
                         <span className="text-xs font-mono font-bold text-cyan-400">Position {pos}</span>
                         {pos === 1 && <span className="text-[9px] text-emerald-400 font-bold">Server</span>}
                       </div>
-                      <p className="text-xs font-bold text-white truncate">#{player?.jersey} {player?.name}</p>
+                      <p className="text-xs font-bold text-white truncate">{player?.jersey} {player?.name}</p>
                       <p className="text-[10px] text-slate-400 truncate">{COURT_POSITIONS[pos]?.zone}</p>
                     </div>
                   );
