@@ -232,15 +232,7 @@ export const TeamFamilyTree: React.FC = () => {
   };
 
   return (
-    <section className="relative py-16 sm:py-24 px-2 sm:px-4 lg:px-6 bg-[#03060c] text-white overflow-hidden select-none">
-      {/* Background Ambient Glow & Cyber Grid */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        <div className="absolute top-10 left-1/2 -translate-x-1/2 w-[700px] h-[450px] bg-amber-500/10 blur-[180px] rounded-full" />
-        <div className="absolute bottom-10 left-10 w-[450px] h-[450px] bg-blue-600/10 blur-[160px] rounded-full" />
-        <div className="absolute bottom-10 right-10 w-[450px] h-[450px] bg-cyan-600/10 blur-[160px] rounded-full" />
-        <div className="absolute inset-0 bg-[radial-gradient(#38bdf8_1px,transparent_1px)] bg-size-[32px_32px] opacity-10" />
-      </div>
-
+    <section className="relative py-16 sm:py-24 px-2 sm:px-4 lg:px-6 bg-[#02040a] text-white overflow-hidden select-none">
       <div className="max-w-6xl mx-auto relative z-10">
         {/* Section Header */}
         <div className="text-center mb-8 sm:mb-12 space-y-3 sm:space-y-4">

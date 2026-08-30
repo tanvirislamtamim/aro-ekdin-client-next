@@ -307,6 +307,7 @@ const Navbar = () => {
                 </>
               )}
 
+
               <Link
                 href="/matches"
                 onClick={() => setIsDropdownOpen(false)}
@@ -363,22 +364,27 @@ const Navbar = () => {
                     installApp();
                     setIsDropdownOpen(false);
                   }}
-                  className="w-full flex items-center gap-3 px-4 py-3 text-sm transition-all duration-300 text-gray-400 hover:text-white hover:bg-white/5 text-left"
+                  className="w-full flex items-center justify-between px-4 py-3 text-sm font-semibold transition-all duration-300 text-cyan-400 hover:text-cyan-300 hover:bg-cyan-950/40 text-left cursor-pointer"
                 >
-                  <svg
-                    className="w-4 h-4"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
-                    />
-                  </svg>
-                  Install App
+                  <div className="flex items-center gap-3">
+                    <svg
+                      className="w-4 h-4 text-cyan-400"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
+                      />
+                    </svg>
+                    <span>Install App</span>
+                  </div>
+                  <span className="text-[9px] px-1.5 py-0.5 rounded bg-cyan-500/20 text-cyan-300 font-mono font-bold">
+                    PWA
+                  </span>
                 </button>
               )}
 

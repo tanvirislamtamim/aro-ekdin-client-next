@@ -167,18 +167,8 @@ export default function Ultimate3DCarousel() {
   return (
     <div 
       ref={containerRef}
-      className="relative w-full min-h-screen bg-linear-to-b from-[#04060d] via-[#020307] to-[#04060d] flex flex-col items-center justify-center py-16 px-3 sm:px-6 lg:px-8 overflow-hidden font-sans text-white select-none cv-auto"
+      className="relative w-full min-h-screen bg-[#02040a] flex flex-col items-center justify-center py-16 px-3 sm:px-6 lg:px-8 overflow-hidden font-sans text-white select-none cv-auto"
     >
-      {/* Background Lighting & Radial Mesh */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[900px] h-[450px] bg-cyan-600/10 blur-[160px] rounded-full"></div>
-        <div className="absolute bottom-10 left-10 w-[500px] h-[350px] bg-blue-600/10 blur-[140px] rounded-full"></div>
-        <div className="absolute top-10 right-10 w-[500px] h-[350px] bg-indigo-600/10 blur-[140px] rounded-full"></div>
-        
-        {/* Subtle Cyber Grid */}
-        <div className="absolute inset-0 bg-[radial-gradient(#1e3a8a_1px,transparent_1px)] bg-size-[40px_40px] opacity-15"></div>
-      </div>
-
       {/* Header Section */}
       <div className="relative z-20 text-center max-w-4xl mx-auto mb-10 sm:mb-14 space-y-4 px-4">
         <motion.div 

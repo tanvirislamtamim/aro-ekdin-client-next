@@ -1,0 +1,45 @@
+{
+  "name": "Aro Ekdin Volleyball Community",
+  "short_name": "Aro Ekdin",
+  "description": "Bound by Passion, Driven by Teamwork - Aro Ekdin Volleyball Club & 3D Tactical Court",
+  "start_url": "/",
+  "id": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#02040a",
+  "theme_color": "#02040a",
+  "icons": [
+    {
+      "src": "/logo.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/logo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "https://res.cloudinary.com/do8awe7fc/image/upload/q_auto/f_auto/v1777145975/Logo_qzb1xk.jpg",
+      "sizes": "512x512",
+      "type": "image/jpeg",
+      "purpose": "any"
+    }
+  ],
+  "categories": ["sports", "entertainment"],
+  "shortcuts": [
+    {
+      "name": "Players Roster",
+      "url": "/players",
+      "description": "View team players and squad details"
+    },
+    {
+      "name": "Gallery",
+      "url": "/gallery",
+      "description": "View tournament match photos and memories"
+    }
+  ]
+}

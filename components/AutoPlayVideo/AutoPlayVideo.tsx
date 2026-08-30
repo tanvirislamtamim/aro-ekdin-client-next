@@ -66,7 +66,7 @@ const AutoPlayVideo: React.FC<AutoPlayVideoProps> = ({ videoSrc }) => {
 
       <div
         ref={containerRef}
-        className="w-full relative overflow-hidden md:h-screen"
+        className="w-full relative overflow-hidden bg-[#02040a] md:h-screen"
       >
         <video
           ref={videoRef}

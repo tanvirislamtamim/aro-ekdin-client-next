@@ -4,17 +4,26 @@ import Providers from "./providers";
 import Script from "next/script";
 
 export const viewport: Viewport = {
-  themeColor: "#0a0a0a",
+  themeColor: "#02040a",
   width: "device-width",
   initialScale: 1,
+  maximumScale: 5,
 };
 
 export const metadata: Metadata = {
-  title: "Aro Ekdin",
-  description: "Bound by Passion, Driven by Teamwork - Aro Ekdin Volleyball Community",
+  title: "Aro Ekdin | Elite Volleyball Team",
+  description:
+    "Bound by Passion, Driven by Teamwork - Official Aro Ekdin Volleyball Club, 3D Tactical Court & Community.",
+  manifest: "/manifest.json",
   icons: {
-    icon: "https://res.cloudinary.com/do8awe7fc/image/upload/q_auto/f_auto/v1777145975/Logo_qzb1xk.jpg",
-    apple: "/logo.png",
+    icon: [
+      { url: "/logo.png", sizes: "192x192", type: "image/png" },
+      { url: "/logo.png", sizes: "512x512", type: "image/png" },
+      { url: "https://res.cloudinary.com/do8awe7fc/image/upload/q_auto/f_auto/v1777145975/Logo_qzb1xk.jpg" },
+    ],
+    apple: [
+      { url: "/logo.png", sizes: "180x180", type: "image/png" },
+    ],
   },
   appleWebApp: {
     capable: true,
@@ -31,12 +40,17 @@ export default function RootLayout({
   return (
     <html lang="en" data-theme="dark">
       <head>
+        <link rel="manifest" href="/manifest.json" />
+        <link rel="apple-touch-icon" href="/logo.png" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+        <meta name="apple-mobile-web-app-title" content="Aro Ekdin" />
         <link
           href="https://unpkg.com/cloudinary-video-player@1.10.6/dist/cld-video-player.min.css"
           rel="stylesheet"
         />
       </head>
-      <body className="antialiased min-h-screen bg-[#0a0a0a] text-white">
+      <body className="antialiased min-h-screen bg-[#02040a] text-white">
         <Providers>{children}</Providers>
         <Script
           src="https://unpkg.com/cloudinary-video-player@1.10.6/dist/cld-video-player.min.js"

@@ -5,6 +5,11 @@ import dynamic from 'next/dynamic';
 
 import TeamFamilyTree from '@/components/TeamFamilyTree/TeamFamilyTree';
 
+const VolleyballCourtSection = dynamic(() => import('@/components/VolleyballCourt/VolleyballCourtSection'), {
+  ssr: true,
+  loading: () => <div className="min-h-[500px] bg-[#030611] flex items-center justify-center text-cyan-400 font-mono text-sm animate-pulse">Loading 3D Court...</div>
+});
+
 const PlayersMarquee = dynamic(() => import('../../components/PlayersMarquee/PlayersMarquee'), {
   ssr: true,
   loading: () => <div className="min-h-screen bg-black flex items-center justify-center text-gray-500">Loading Exhibition...</div>
@@ -74,7 +79,7 @@ const Home = () => {
       <style>
         {`
           .dark-home-bg {
-            background-color: #0a0a0a;
+            background-color: #02040a;
           }
           .dark-home-bg > * {
             background-color: inherit;
@@ -191,16 +196,19 @@ const Home = () => {
           <div className="absolute bottom-0 left-0 w-full h-24 bg-linear-to-t from-black to-transparent pointer-events-none"></div>
         </section>
 
-        <div className="bg-black/90">
+        <div className="bg-[#02040a]">
           <PlayersMarquee />
         </div>
 
-        <div className="bg-black">
+        <div className="bg-[#02040a]">
           <AutoPlayVideo videoSrc="https://res.cloudinary.com/do8awe7fc/video/upload/q_auto/f_auto/v1777145434/MainVideo_rxfdje.mp4" />
         </div>
 
         {/* Team Family Tree Section */}
         <TeamFamilyTree />
+
+        {/* 3D Volleyball Court & Lineup Section */}
+        <VolleyballCourtSection />
         
       </div>
     </>

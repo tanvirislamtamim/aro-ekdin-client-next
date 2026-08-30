@@ -11,6 +11,7 @@ import {
   FaBook,
   FaImage,
   FaTrophy,
+  FaVolleyballBall,
 } from "react-icons/fa";
 import { FaUserShield } from "react-icons/fa6";
 import useAuth from "../../hooks/useAuth";
@@ -36,6 +37,7 @@ export default function DashboardLayout({
         // ADMIN ONLY ROUTES
         ...(!roleLoading && (role === "admin" || role === "developer")
           ? [
+              { name: "Manage Court Lineup", path: "/dashboard/courtLineup", icon: <FaVolleyballBall /> },
               { name: "Manage Matches", path: "/dashboard/manageMatches", icon: <FaTrophy /> },
               { name: "Add Player", path: "/dashboard/addPlayer", icon: <FaUserPlus /> },
               { name: "Update Player", path: "/dashboard/updatePlayer", icon: <FaUserEdit /> },
