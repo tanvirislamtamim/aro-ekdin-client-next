@@ -74,7 +74,7 @@ export const VolleyballCourtSection: React.FC<VolleyballCourtSectionProps> = ({
   const { role } = useUserRole();
   const isAdmin = role === "admin" || role === "developer";
 
-  const [players, setPlayers] = useState<CourtPlayer[]>(DEFAULT_LINEUP_PLAYERS);
+  const [players, setPlayers] = useState<CourtPlayer[]>(dbCourtPlayers || []);
   const [rotationCount, setRotationCount] = useState(1);
   const [formation, setFormation] = useState<FormationType>("standard");
   const [netHeight, setNetHeight] = useState<"men" | "women">("men");
@@ -84,9 +84,9 @@ export const VolleyballCourtSection: React.FC<VolleyballCourtSectionProps> = ({
   const [showRulesModal, setShowRulesModal] = useState(false);
   const [isPending, startTransition] = useTransition();
 
-  // Sync with DB players when loaded
+  // Sync with DB players when loaded from MongoDB
   useEffect(() => {
-    if (dbCourtPlayers && dbCourtPlayers.length === 6) {
+    if (dbCourtPlayers && dbCourtPlayers.length > 0) {
       setPlayers(dbCourtPlayers);
     }
     if (dbFormation) setFormation(dbFormation);

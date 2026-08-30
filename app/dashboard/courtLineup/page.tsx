@@ -46,7 +46,7 @@ const ManageCourtLineupContent = () => {
     isUpdating,
   } = useCourtLineup();
 
-  const [courtPlayers, setCourtPlayers] = useState<CourtPlayer[]>(activePlayers || DEFAULT_LINEUP_PLAYERS);
+  const [courtPlayers, setCourtPlayers] = useState<CourtPlayer[]>(activePlayers || []);
   const [formation, setFormation] = useState<FormationType>(activeFormation || "standard");
   const [netHeight, setNetHeight] = useState<"men" | "women">(activeNetHeight || "men");
   const [captainId, setCaptainId] = useState<string>("3");
@@ -66,7 +66,7 @@ const ManageCourtLineupContent = () => {
 
   // Sync DB lineup to local state on load
   useEffect(() => {
-    if (activePlayers && activePlayers.length === 6) {
+    if (activePlayers && activePlayers.length > 0) {
       setCourtPlayers(activePlayers);
     }
     if (existingLineup) {
@@ -182,13 +182,14 @@ const ManageCourtLineupContent = () => {
         confirmButtonColor: "#06b6d4",
       });
     } catch (err: any) {
+      console.error("Save lineup error:", err);
       Swal.fire({
-        title: "Saved!",
-        text: "Court lineup updated and synchronized with the 3D Court.",
-        icon: "success",
+        title: "Save Error",
+        text: err?.response?.data?.message || err?.message || "Failed to save lineup to database. Please check your admin permissions.",
+        icon: "error",
         background: "#0f172a",
         color: "#ffffff",
-        confirmButtonColor: "#06b6d4",
+        confirmButtonColor: "#ef4444",
       });
     }
   };

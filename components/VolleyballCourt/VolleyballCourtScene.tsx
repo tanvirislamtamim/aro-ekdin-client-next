@@ -19,53 +19,7 @@ interface VolleyballCourtSceneProps {
   netHeight?: "men" | "women";
 }
 
-// Procedural Volleyball Texture
-function createVolleyballTexture(): THREE.CanvasTexture {
-  const canvas = document.createElement("canvas");
-  canvas.width = 512;
-  canvas.height = 512;
-  const ctx = canvas.getContext("2d");
-  if (ctx) {
-    // Base yellow
-    ctx.fillStyle = "#fbbf24";
-    ctx.fillRect(0, 0, 512, 512);
-
-    // Blue dynamic curved panels
-    ctx.fillStyle = "#2563eb";
-    ctx.beginPath();
-    ctx.moveTo(0, 100);
-    ctx.bezierCurveTo(150, 50, 350, 450, 512, 400);
-    ctx.lineTo(512, 512);
-    ctx.lineTo(0, 512);
-    ctx.closePath();
-    ctx.fill();
-
-    ctx.beginPath();
-    ctx.moveTo(0, 0);
-    ctx.lineTo(512, 0);
-    ctx.bezierCurveTo(350, 150, 150, 300, 0, 250);
-    ctx.closePath();
-    ctx.fill();
-
-    // White seams
-    ctx.strokeStyle = "#ffffff";
-    ctx.lineWidth = 6;
-    ctx.beginPath();
-    ctx.arc(256, 256, 200, 0, Math.PI * 2);
-    ctx.stroke();
-
-    ctx.beginPath();
-    ctx.moveTo(256, 56);
-    ctx.lineTo(256, 456);
-    ctx.moveTo(56, 256);
-    ctx.lineTo(456, 256);
-    ctx.stroke();
-  }
-  const texture = new THREE.CanvasTexture(canvas);
-  texture.wrapS = THREE.RepeatWrapping;
-  texture.wrapT = THREE.RepeatWrapping;
-  return texture;
-}
+// Net Mesh Texture
 
 // Procedural Net Mesh Texture
 function createNetTexture(): THREE.CanvasTexture {
@@ -164,7 +118,13 @@ export const VolleyballCourtScene: React.FC<VolleyballCourtSceneProps> = ({
   netHeight = "men",
 }) => {
   const netTexture = useMemo(() => createNetTexture(), []);
-  const ballTexture = useMemo(() => createVolleyballTexture(), []);
+  const ballTexture = useMemo(() => {
+    if (typeof window === "undefined") return null;
+    const loader = new THREE.TextureLoader();
+    const tex = loader.load("/volleyball-ball.png");
+    tex.colorSpace = THREE.SRGBColorSpace;
+    return tex;
+  }, []);
   const antennaTexture = useMemo(() => createAntennaTexture(), []);
 
   // Compute 3D target coordinates for each player based on current rotational position & formation
@@ -418,21 +378,22 @@ export const VolleyballCourtScene: React.FC<VolleyballCourtSceneProps> = ({
           </group>
         </group>
 
-        {/* 5. 3D VOLLEYBALL (Animated Floating / Spiking above the Net) */}
-        <Float speed={2} rotationIntensity={1.5} floatIntensity={0.8}>
+        {/* 5. 3D VOLLEYBALL (Realistic Ball matching Login Form animated above the Net) */}
+        <Float speed={2.2} rotationIntensity={2} floatIntensity={0.9}>
           <group position={[1.2, 2.7, 0.5]}>
             <mesh castShadow receiveShadow>
-              <sphereGeometry args={[0.22, 32, 32]} />
+              <sphereGeometry args={[0.24, 64, 64]} />
               <meshStandardMaterial
-                map={ballTexture}
-                roughness={0.3}
-                metalness={0.1}
+                map={ballTexture || undefined}
+                color={ballTexture ? "#ffffff" : "#fbbf24"}
+                roughness={0.35}
+                metalness={0.05}
               />
             </mesh>
             {/* Ball Glow Ring */}
-            <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0, 0]}>
-              <ringGeometry args={[0.28, 0.32, 24]} />
-              <meshBasicMaterial color="#38bdf8" transparent opacity={0.6} side={THREE.DoubleSide} />
+            <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -0.05, 0]}>
+              <ringGeometry args={[0.26, 0.32, 32]} />
+              <meshBasicMaterial color="#38bdf8" transparent opacity={0.5} side={THREE.DoubleSide} />
             </mesh>
           </group>
         </Float>
