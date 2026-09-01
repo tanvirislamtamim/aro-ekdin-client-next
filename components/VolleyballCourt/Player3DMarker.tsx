@@ -184,7 +184,7 @@ export const Player3DMarker: React.FC<Player3DMarkerProps> = ({
 
             {/* Photo Avatar Ring */}
             <div
-              className="relative w-9 h-9 sm:w-16 sm:h-16 rounded-full p-0.5 bg-slate-950 border sm:border-2 shadow-2xl"
+              className="relative w-10 h-10 sm:w-16 sm:h-16 rounded-full p-0.5 bg-slate-950 border sm:border-2 shadow-2xl"
               style={{ borderColor: glowColor }}
             >
               <img
@@ -194,9 +194,9 @@ export const Player3DMarker: React.FC<Player3DMarkerProps> = ({
                 loading="eager"
               />
 
-              {/* Jersey Number Floating Badge */}
+              {/* Jersey Number Badge — ON TOP of photo (center-top) */}
               <div
-                className="absolute -top-1 -right-1 sm:-top-1.5 sm:-right-1.5 w-4 h-4 sm:w-7 sm:h-7 rounded-full bg-slate-950 font-black text-[8px] sm:text-xs flex items-center justify-center border sm:border-2 shadow-lg tracking-tighter text-white"
+                className="absolute -top-2.5 left-1/2 -translate-x-1/2 sm:-top-3 px-1.5 sm:px-2 py-0 sm:py-0.5 rounded-full bg-slate-950 font-black text-[7px] sm:text-[10px] flex items-center justify-center border sm:border-2 shadow-lg tracking-tight whitespace-nowrap z-10"
                 style={{ borderColor: glowColor, color: currentTheme.text }}
               >
                 {player.jersey}

@@ -301,42 +301,44 @@ export const VolleyballCourtSection: React.FC<VolleyballCourtSectionProps> = ({
           </div>
 
           {/* Bottom Rotation Control Bar Overlay */}
-          <div className="absolute bottom-2.5 sm:bottom-4 left-2.5 sm:left-4 right-2.5 sm:right-4 z-20 flex flex-wrap items-center justify-between gap-2 pointer-events-none">
-            {/* Rotation Controls */}
-            <div className="flex items-center gap-1.5 sm:gap-2 p-1 sm:p-1.5 bg-black/85 backdrop-blur-xl border border-white/15 rounded-xl sm:rounded-2xl shadow-2xl pointer-events-auto">
+          <div className="absolute bottom-2 sm:bottom-4 left-2 sm:left-4 right-2 sm:right-4 z-20 flex items-center justify-between gap-1.5 pointer-events-none">
+            {/* Rotation Controls — compact single line on mobile */}
+            <div className="flex items-center gap-1 sm:gap-2 px-1.5 py-1 sm:p-1.5 bg-black/85 backdrop-blur-xl border border-white/15 rounded-xl sm:rounded-2xl shadow-2xl pointer-events-auto">
               <button
                 onClick={handleRotateCounterClockwise}
-                className="p-1.5 sm:p-2.5 rounded-lg sm:rounded-xl bg-white/5 hover:bg-white/15 border border-white/10 text-white transition-all cursor-pointer active:scale-95"
+                disabled={isPending}
+                className="p-1.5 sm:p-2 rounded-lg sm:rounded-xl bg-white/5 hover:bg-white/15 border border-white/10 text-white transition-all cursor-pointer active:scale-95 disabled:opacity-40 disabled:cursor-not-allowed"
                 title="Rotate Counter-Clockwise"
               >
-                <RotateCcw className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+                <RotateCcw className={`w-3 h-3 sm:w-4 sm:h-4 ${isPending ? "animate-spin" : ""}`} />
               </button>
 
-              <div className="px-2 sm:px-3 text-center">
-                <span className="block text-[8px] sm:text-[10px] font-mono text-cyan-400 font-bold uppercase tracking-wider leading-none mb-0.5">
-                  Rotation
+              <div className="px-1.5 sm:px-3 text-center">
+                <span className="block text-[7px] sm:text-[10px] font-mono text-cyan-400 font-bold uppercase tracking-wider leading-none">
+                  ROT
                 </span>
-                <span className="block text-xs sm:text-sm font-black text-white tracking-wide leading-none">
+                <span className="block text-[10px] sm:text-sm font-black text-white tracking-wide leading-none">
                   P{rotationCount}/6
                 </span>
               </div>
 
               <button
                 onClick={handleRotateClockwise}
-                className="flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-lg sm:rounded-xl bg-linear-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-bold text-[11px] sm:text-xs uppercase tracking-wider shadow-[0_0_15px_rgba(6,182,212,0.5)] transition-all cursor-pointer active:scale-95"
+                disabled={isPending}
+                className="flex items-center gap-1 sm:gap-2 px-2 sm:px-4 py-1 sm:py-2 rounded-lg sm:rounded-xl bg-linear-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-bold text-[9px] sm:text-xs uppercase tracking-wider shadow-[0_0_15px_rgba(6,182,212,0.5)] transition-all cursor-pointer active:scale-95 disabled:opacity-40 disabled:cursor-not-allowed"
                 title="Rotate Clockwise (FIVB Rule 7.6.2)"
               >
-                <RotateCw className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-                <span className="hidden xs:inline">Rotate Team</span>
-                <span className="xs:hidden">Rotate</span>
+                <RotateCw className="w-3 h-3 sm:w-4 sm:h-4" />
+                <span className="hidden sm:inline">Rotate Team</span>
+                <span className="sm:hidden">Rotate</span>
               </button>
             </div>
 
             {/* Instruction tooltip badge */}
-            <div className="flex items-center gap-1 sm:gap-1.5 px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full bg-black/80 border border-white/10 text-[10px] sm:text-[11px] font-medium text-slate-300 backdrop-blur-md pointer-events-auto">
-              <HelpCircle className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-cyan-400 shrink-0" />
+            <div className="flex items-center gap-1 px-2 sm:px-3 py-1 sm:py-1.5 rounded-full bg-black/80 border border-white/10 text-[8px] sm:text-[11px] font-medium text-slate-300 backdrop-blur-md pointer-events-auto">
+              <HelpCircle className="w-2.5 h-2.5 sm:w-3.5 sm:h-3.5 text-cyan-400 shrink-0" />
               <span className="hidden sm:inline">Drag to rotate 3D court &bull; Scroll to zoom</span>
-              <span className="sm:hidden">Touch & drag court</span>
+              <span className="sm:hidden">Touch &amp; drag</span>
             </div>
           </div>
 
@@ -344,7 +346,7 @@ export const VolleyballCourtSection: React.FC<VolleyballCourtSectionProps> = ({
           <div className="w-full h-112.5 sm:h-137.5 md:h-170">
             <DynamicCanvas
               shadows
-              camera={{ position: [9, 9, 13], fov: 42 }}
+              camera={{ position: [12, 11, 17], fov: 45 }}
               gl={{ antialias: true, alpha: false }}
             >
               <color attach="background" args={["#02040a"]} />
@@ -362,26 +364,25 @@ export const VolleyballCourtSection: React.FC<VolleyballCourtSectionProps> = ({
         </div>
 
         {/* 6 Starting Players Quick List & Position Grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2.5 sm:gap-3">
+        <div className="grid grid-cols-3 sm:grid-cols-3 lg:grid-cols-6 gap-1.5 sm:gap-3">
           {players
             .slice()
             .sort((a, b) => a.currentPosition - b.currentPosition)
             .map((player) => {
               const isSelected = selectedPlayer?.id === player.id;
-              const posCoord = COURT_POSITIONS[player.currentPosition];
 
               return (
                 <motion.div
                   key={player.id}
-                  whileHover={{ y: -4 }}
+                  whileHover={{ y: -3 }}
                   onClick={() => setSelectedPlayer(player)}
-                  className={`p-2.5 sm:p-3 rounded-xl sm:rounded-2xl border backdrop-blur-md transition-all cursor-pointer flex flex-col justify-between ${isSelected
+                  className={`p-2 sm:p-3 rounded-xl sm:rounded-2xl border backdrop-blur-md transition-all cursor-pointer flex flex-col justify-between ${isSelected
                       ? "bg-cyan-950/80 border-cyan-400 shadow-[0_0_20px_rgba(6,182,212,0.4)]"
                       : "bg-black/50 border-white/10 hover:border-cyan-500/40 hover:bg-slate-900/60"
                     }`}
                 >
-                  <div className="flex items-center gap-2.5 sm:gap-3">
-                    <div className="relative w-8 h-8 sm:w-10 sm:h-10 rounded-full overflow-hidden border border-cyan-400/50 bg-slate-950 shrink-0">
+                  <div className="flex items-center gap-1.5 sm:gap-3">
+                    <div className="relative w-7 h-7 sm:w-10 sm:h-10 rounded-full overflow-hidden border border-cyan-400/50 bg-slate-950 shrink-0">
                       <img
                         src={player.img}
                         alt={player.name}
@@ -389,23 +390,23 @@ export const VolleyballCourtSection: React.FC<VolleyballCourtSectionProps> = ({
                       />
                     </div>
                     <div className="min-w-0 flex-1">
-                      <div className="flex items-center gap-1">
-                        <span className="text-cyan-400 font-black text-[11px] sm:text-xs">
+                      <div className="flex items-center gap-0.5 sm:gap-1">
+                        <span className="text-cyan-400 font-black text-[10px] sm:text-xs">
                           {player.jersey}
                         </span>
-                        <span className="text-[9px] sm:text-[10px] px-1 py-0.2 rounded bg-cyan-950/80 text-cyan-300 font-mono font-bold">
+                        <span className="text-[8px] sm:text-[10px] px-0.5 sm:px-1 rounded bg-cyan-950/80 text-cyan-300 font-mono font-bold">
                           P{player.currentPosition}
                         </span>
                       </div>
-                      <p className="text-white font-bold text-[11px] sm:text-xs truncate">
+                      <p className="text-white font-bold text-[10px] sm:text-xs truncate leading-tight">
                         {player.name}
                       </p>
                     </div>
                   </div>
 
-                  <div className="mt-2 pt-1.5 sm:pt-2 border-t border-white/10 flex items-center justify-between text-[9px] sm:text-[10px] text-slate-400">
+                  <div className="mt-1.5 pt-1 sm:pt-2 border-t border-white/10 flex items-center justify-between text-[8px] sm:text-[10px] text-slate-400">
                     <span className="truncate">{player.role}</span>
-                    <ChevronRight className="w-3 h-3 text-cyan-400 shrink-0" />
+                    <ChevronRight className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-cyan-400 shrink-0" />
                   </div>
                 </motion.div>
               );
@@ -497,21 +498,25 @@ export const VolleyballCourtSection: React.FC<VolleyballCourtSectionProps> = ({
               <div className="p-6 sm:p-8 space-y-6">
                 {/* Header Profile with Jersey */}
                 <div className="flex items-center gap-5">
-                  <div className="relative w-20 h-20 sm:w-24 sm:h-24 rounded-full overflow-hidden border-2 border-cyan-400 shadow-[0_0_30px_rgba(6,182,212,0.5)] bg-black shrink-0">
-                    <img
-                      src={selectedPlayer.img}
-                      alt={selectedPlayer.name}
-                      className="w-full h-full object-cover"
-                    />
-                    <div className="absolute -bottom-1 -right-1 w-8 h-8 rounded-full bg-cyan-500 text-black font-black text-xs flex items-center justify-center border-2 border-black">
+                  {/* Avatar with jersey number ON TOP of photo */}
+                  <div className="relative shrink-0">
+                    {/* Jersey number badge — ON TOP of photo */}
+                    <div className="absolute -top-3 left-1/2 -translate-x-1/2 z-10 px-2.5 py-0.5 rounded-full bg-cyan-500 text-slate-950 font-black text-xs tracking-tight border-2 border-black shadow-[0_0_12px_rgba(6,182,212,0.8)] whitespace-nowrap">
                       {selectedPlayer.jersey}
+                    </div>
+                    <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full overflow-hidden border-2 border-cyan-400 shadow-[0_0_30px_rgba(6,182,212,0.5)] bg-black">
+                      <img
+                        src={selectedPlayer.img}
+                        alt={selectedPlayer.name}
+                        className="w-full h-full object-cover"
+                      />
                     </div>
                   </div>
 
                   <div className="space-y-1">
                     <div className="flex items-center gap-2">
                       <span className="px-2.5 py-0.5 rounded-full bg-cyan-950/80 border border-cyan-500/40 text-cyan-300 text-xs font-mono font-bold uppercase">
-                        Current: Position {selectedPlayer.currentPosition}
+                        Position {selectedPlayer.currentPosition}
                       </span>
                     </div>
                     <h3 className="text-2xl sm:text-3xl font-black text-white">

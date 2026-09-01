@@ -77,14 +77,14 @@ function CameraController({ preset }: { preset: CameraPreset }) {
   const targetCoords = useMemo(() => {
     switch (preset) {
       case "topdown":
-        return { pos: new THREE.Vector3(0, 18, 0.1), target: new THREE.Vector3(0, 0, 0) };
+        return { pos: new THREE.Vector3(0, 22, 0.1), target: new THREE.Vector3(0, 0, 0) };
       case "spike":
         return { pos: new THREE.Vector3(0, 4.5, -6), target: new THREE.Vector3(0, 1.8, 3) };
       case "server":
         return { pos: new THREE.Vector3(0, 5.5, 15), target: new THREE.Vector3(0, 1.2, 0) };
       case "orbit":
       default:
-        return { pos: new THREE.Vector3(9, 9, 13), target: new THREE.Vector3(0, 0.5, 2) };
+        return { pos: new THREE.Vector3(12, 11, 17), target: new THREE.Vector3(0, 0.5, 2) };
     }
   }, [preset]);
 
@@ -138,51 +138,124 @@ export const VolleyballCourtScene: React.FC<VolleyballCourtSceneProps> = ({
     <>
       <CameraController preset={cameraPreset} />
 
-      {/* Lighting System */}
-      <ambientLight intensity={0.65} />
+      {/* Enhanced Lighting System — Stadium Atmosphere */}
+      <ambientLight intensity={0.45} color="#c8d8f0" />
+      {/* Main overhead key light */}
       <directionalLight
-        position={[10, 15, 10]}
-        intensity={1.2}
+        position={[8, 18, 8]}
+        intensity={1.4}
         castShadow
         shadow-mapSize-width={2048}
         shadow-mapSize-height={2048}
+        shadow-camera-near={0.5}
+        shadow-camera-far={60}
+        shadow-camera-left={-15}
+        shadow-camera-right={15}
+        shadow-camera-top={20}
+        shadow-camera-bottom={-20}
+        color="#ffffff"
       />
-      <directionalLight position={[-10, 12, -10]} intensity={0.7} />
-      {/* Stadium Rim Floodlights */}
-      <spotLight
-        position={[0, 14, 0]}
-        intensity={1.8}
-        angle={0.8}
-        penumbra={0.5}
-        color="#38bdf8"
-      />
-      <pointLight position={[0, 3, 0]} intensity={0.5} color="#ffffff" />
+      <directionalLight position={[-8, 14, -8]} intensity={0.6} color="#dde8ff" />
+      {/* 4 corner stadium floodlights */}
+      <spotLight position={[-9, 16, 12]}  intensity={2.2} angle={0.45} penumbra={0.6} color="#e0f0ff" castShadow={false} />
+      <spotLight position={[ 9, 16, 12]}  intensity={2.2} angle={0.45} penumbra={0.6} color="#e0f0ff" castShadow={false} />
+      <spotLight position={[-9, 16, -12]} intensity={2.2} angle={0.45} penumbra={0.6} color="#e0f0ff" castShadow={false} />
+      <spotLight position={[ 9, 16, -12]} intensity={2.2} angle={0.45} penumbra={0.6} color="#e0f0ff" castShadow={false} />
+      {/* Cyan accent glow from under the net */}
+      <pointLight position={[0, 2.8, 0]}  intensity={1.2} color="#06b6d4" distance={8} />
+      {/* Warm team side fill */}
+      <pointLight position={[0, 4, 9]}    intensity={0.6} color="#22d3ee" distance={12} />
+      <pointLight position={[0, 4, -9]}   intensity={0.5} color="#f43f5e" distance={10} />
 
       {/* 3D ARENA & COURT GEOMETRY */}
       <group position={[0, 0, 0]}>
+        {/* ─── STADIUM BLEACHERS (4 sides) ─── */}
+        {/* Long side stands (along Z axis, left and right of court) */}
+        {([-1, 1] as const).map((side) => (
+          <group key={`stand-side-${side}`} position={[side * 12, 0, 0]}>
+            {[0, 1, 2, 3].map((row) => (
+              <mesh key={row} position={[side * row * 0.6, row * 1.1, 0]} receiveShadow>
+                <boxGeometry args={[1.4, 0.28, 26]} />
+                <meshStandardMaterial
+                  color={row % 2 === 0 ? "#0f172a" : "#0c1524"}
+                  roughness={0.85}
+                  metalness={0.05}
+                />
+              </mesh>
+            ))}
+            {/* Railing */}
+            <mesh position={[side * 2.5, 4.8, 0]}>
+              <boxGeometry args={[0.06, 0.5, 26]} />
+              <meshStandardMaterial color="#1e40af" metalness={0.8} roughness={0.2} />
+            </mesh>
+            {/* Colored seat blocks for visual interest */}
+            {[-10, -6, -2, 2, 6, 10].map((zOff, i) => (
+              <mesh key={`seat-${i}`} position={[side * 0.4, 1.25, zOff]}>
+                <boxGeometry args={[1.0, 0.18, 3.2]} />
+                <meshStandardMaterial
+                  color={i % 3 === 0 ? "#1d4ed8" : i % 3 === 1 ? "#0e7490" : "#1e3a8a"}
+                  roughness={0.7}
+                />
+              </mesh>
+            ))}
+          </group>
+        ))}
+
+        {/* End stands (along X axis, behind team & opponent baselines) */}
+        {([-1, 1] as const).map((side) => (
+          <group key={`stand-end-${side}`} position={[0, 0, side * 14]}>
+            {[0, 1, 2].map((row) => (
+              <mesh key={row} position={[0, row * 1.0, side * row * 0.55]} receiveShadow>
+                <boxGeometry args={[22, 0.26, 1.2]} />
+                <meshStandardMaterial
+                  color={row % 2 === 0 ? "#0f172a" : "#0c1524"}
+                  roughness={0.85}
+                />
+              </mesh>
+            ))}
+            {/* Colored seats */}
+            {[-8, -4, 0, 4, 8].map((xOff, i) => (
+              <mesh key={`eseat-${i}`} position={[xOff, 1.12, side * 0.5]}>
+                <boxGeometry args={[3.5, 0.16, 1.0]} />
+                <meshStandardMaterial
+                  color={i % 2 === 0 ? "#1e3a8a" : "#0e7490"}
+                  roughness={0.7}
+                />
+              </mesh>
+            ))}
+          </group>
+        ))}
+
+        {/* Stadium floor / arena base */}
+        <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -0.15, 0]} receiveShadow>
+          <planeGeometry args={[32, 40]} />
+          <meshStandardMaterial color="#060d1a" roughness={0.9} metalness={0.0} />
+        </mesh>
+
         {/* 1. Surrounding Free Zone Floor (Navy / Royal Blue Surrounding) */}
         <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -0.01, 0]} receiveShadow>
           <planeGeometry args={[22, 30]} />
           <meshStandardMaterial
-            color="#0b1329"
-            roughness={0.6}
-            metalness={0.1}
+            color="#0b1a3a"
+            roughness={0.5}
+            metalness={0.15}
           />
         </mesh>
 
-        {/* Free Zone Boundary Outline (FIVB min 3m on all sides) */}
+        {/* Free Zone Boundary glow line */}
         <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0, 0]}>
           <planeGeometry args={[19, 28]} />
-          <meshBasicMaterial color="#1e3a8a" wireframe transparent opacity={0.25} />
+          <meshBasicMaterial color="#1e3a8a" wireframe transparent opacity={0.18} />
         </mesh>
 
-        {/* 2. Main Playing Court (9m x 18m) - Solid Single Color without any patterns/designs */}
-        <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0.005, 0]} receiveShadow>
+        {/* 2. Main Playing Court (9m x 18m) — glossy resin finish */}
+        <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0.005, 0]} receiveShadow castShadow>
           <planeGeometry args={[9, 18]} />
           <meshStandardMaterial
-            color="#c25e1a"
-            roughness={0.45}
-            metalness={0.05}
+            color="#c96820"
+            roughness={0.28}
+            metalness={0.08}
+            envMapIntensity={0.6}
           />
         </mesh>
 
