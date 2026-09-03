@@ -497,9 +497,11 @@ export const AroAssistantModal: React.FC<AroAssistantModalProps> = ({
                     {msg.id === "welcome-1" && messages.length === 1 && (
                       <div className="mt-3 pt-2.5 border-t border-cyan-500/20 flex flex-wrap gap-1.5">
                         {[
-                          "সোশ্যাল মিডিয়া লিঙ্ক দিন",
+                          "দলের অধিনায়ক ও সেরা খেলোয়াড় কে?",
+                          "সেরা অ্যাটাকার ও সেরা লিবারো কে?",
+                          "টিমের সেরা সেটার কে?",
                           "টিমের প্লেয়ারদের তালিকা",
-                          "হোম গ্রাউন্ড ও প্র্যাকটিস সময়",
+                          "সোশ্যাল মিডিয়া লিঙ্ক দিন",
                           "ভলিবল রোটেশন নিয়ম কি?",
                         ].map((promptText, pIdx) => (
                           <button
