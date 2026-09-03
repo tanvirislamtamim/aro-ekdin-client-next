@@ -17,6 +17,7 @@ export interface Player {
   facebook?: string;
   instagram?: string;
   whatsapp?: string;
+  nationality?: string;
 }
 
 export interface PlayerFormData {
