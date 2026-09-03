@@ -196,19 +196,23 @@ const Home = () => {
           <div className="absolute bottom-0 left-0 w-full h-24 bg-linear-to-t from-black to-transparent pointer-events-none"></div>
         </section>
 
-        <div className="bg-[#02040a]">
+        <div id="players-marquee" className="bg-[#02040a]">
           <PlayersMarquee />
         </div>
 
-        <div className="bg-[#02040a]">
+        <div id="video-section" className="bg-[#02040a]">
           <AutoPlayVideo videoSrc="https://res.cloudinary.com/do8awe7fc/video/upload/q_auto/f_auto/v1777145434/MainVideo_rxfdje.mp4" />
         </div>
 
         {/* Team Family Tree Section */}
-        <TeamFamilyTree />
+        <div id="team-tree">
+          <TeamFamilyTree />
+        </div>
 
         {/* 3D Volleyball Court & Lineup Section */}
-        <VolleyballCourtSection />
+        <div id="court-lineup">
+          <VolleyballCourtSection />
+        </div>
         
       </div>
     </>

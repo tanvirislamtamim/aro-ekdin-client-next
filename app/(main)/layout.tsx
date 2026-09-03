@@ -3,6 +3,7 @@ import Navbar from "../../components/NavBar/NavBar";
 import Footer from "../../components/Footer/Footer";
 import ScrollToTop from "../../components/ScrollToTop/ScrollToTop";
 import PWAInstallBanner from "../../components/PWA/PWAInstallBanner";
+import AroAssistant from "../../components/AroAssistant/AroAssistant";
 
 export default function MainLayout({
   children,
@@ -15,7 +16,9 @@ export default function MainLayout({
       <PWAInstallBanner />
       <Navbar />
       <div className="flex-grow">{children}</div>
+      <AroAssistant />
       <Footer />
     </div>
   );
 }
+
