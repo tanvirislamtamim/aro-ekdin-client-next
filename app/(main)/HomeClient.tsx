@@ -4,7 +4,6 @@ import { useState, useEffect, useRef } from 'react';
 import dynamic from 'next/dynamic';
 
 import TeamFamilyTree from '@/components/TeamFamilyTree/TeamFamilyTree';
-import JsonLd from '@/components/JsonLd';
 
 const VolleyballCourtSection = dynamic(() => import('@/components/VolleyballCourt/VolleyballCourtSection'), {
   ssr: true,
@@ -77,7 +76,6 @@ const HomeClient = () => {
 
   return (
     <>
-      <JsonLd />
       <style>
         {`
           .dark-home-bg {
